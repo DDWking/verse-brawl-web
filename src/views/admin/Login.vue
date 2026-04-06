@@ -20,8 +20,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { adminLogin } from '../utils/api'
-import { useUserStore } from '../stores/user'
+import { adminLogin } from '../../utils/api'
+import { useUserStore } from '../../stores/user'
 import { ElMessage } from 'element-plus'
 
 const router = useRouter()
