@@ -1,53 +1,61 @@
 <template>
-  <div class="character-page">
-    <div class="page-header">
-      <div class="header-icon">
-        <svg width="60" height="60" viewBox="0 0 60 60">
-          <circle cx="30" cy="30" r="26" fill="#0f3460"/>
-          <path d="M20 20 L40 30 L20 40 Z" fill="#00d4ff"/>
-          <circle cx="30" cy="30" r="8" fill="#ff6b35"/>
-        </svg>
-      </div>
+  <div class="skills container">
+    <header class="skills-header">
       <h1>角色技能</h1>
-      <p>选择你的战斗角色，释放独特技能</p>
-    </div>
+      <p>了解每个角色的特性，选择你的本命英雄</p>
+    </header>
 
-    <div class="characters-grid">
-      <div class="character-card" v-for="item in characters" :key="item.character.id">
-        <div class="character-header">
-          <div class="avatar-wrapper">
-            <div class="avatar-placeholder">
-              <svg width="80" height="80" viewBox="0 0 80 80">
-                <circle cx="40" cy="40" r="38" fill="#16213e"/>
-                <circle cx="40" cy="40" r="30" fill="#0f3460"/>
-                <circle cx="40" cy="40" r="20" fill="#00d4ff" opacity="0.3"/>
-                <polygon points="40,25 50,35 50,45 40,55 30,45 30,35" fill="#ff6b35"/>
-              </svg>
-            </div>
+    <div class="skills-layout">
+      <div class="characters-list">
+        <button
+          v-for="item in characters"
+          :key="item.character.id"
+          :class="['char-btn', { active: activeChar?.character.id === item.character.id }]"
+          @click="activeChar = item"
+        >
+          <div class="char-avatar"></div>
+          <div class="char-info">
+            <div class="char-name">{{ item.character.name }}</div>
+            <div class="char-title">{{ item.character.intro?.slice(0, 10) }}...</div>
           </div>
-          <div class="character-info">
-            <h2>{{ item.character.name }}</h2>
-            <p class="intro">{{ item.character.intro }}</p>
-            <div class="pros-cons">
-              <span class="pro-tag">优势: {{ item.character.advantage }}</span>
-              <span class="con-tag">劣势: {{ item.character.disadvantage }}</span>
+        </button>
+      </div>
+
+      <div class="char-detail" v-if="activeChar">
+        <div class="detail-header">
+          <div class="detail-avatar"></div>
+          <div class="detail-info">
+            <h2 class="detail-name">{{ activeChar.character.name }}</h2>
+            <p class="detail-intro">{{ activeChar.character.intro }}</p>
+            <div class="detail-stats">
+              <div class="stat-item" v-for="stat in stats" :key="stat.label">
+                <div class="stat-header">
+                  <span class="stat-label">{{ stat.label }}</span>
+                  <span class="stat-value">{{ getStatValue(stat.key) }}</span>
+                </div>
+                <div class="stat-bar">
+                  <div 
+                    class="stat-fill" 
+                    :class="stat.color"
+                    :style="{ width: getStatValue(stat.key) + '%' }"
+                  ></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="skills-section">
-          <h3>技能列表</h3>
+          <h3 class="skills-title">核心技能</h3>
           <div class="skills-grid">
-            <div class="skill-item" v-for="skill in item.skills" :key="skill.id">
-              <div class="skill-icon-placeholder">
-                <svg width="48" height="48" viewBox="0 0 48 48">
-                  <circle cx="24" cy="24" r="22" fill="#16213e"/>
-                  <circle cx="24" cy="24" r="16" fill="#0f3460"/>
-                  <polygon points="24,12 30,18 30,30 24,36 18,30 18,18" fill="#00d4ff"/>
+            <div class="skill-card" v-for="skill in activeChar.skills" :key="skill.id">
+              <div class="skill-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                 </svg>
               </div>
-              <h4>{{ skill.name }}</h4>
-              <p>{{ skill.description }}</p>
+              <h4 class="skill-name">{{ skill.name }}</h4>
+              <p class="skill-desc">{{ skill.description }}</p>
             </div>
           </div>
         </div>
@@ -61,11 +69,26 @@ import { ref, onMounted } from 'vue'
 import { getAllWithSkills } from '../utils/api'
 
 const characters = ref([])
+const activeChar = ref(null)
+
+const stats = [
+  { label: '生存能力', key: 'hp', color: 'stat-green' },
+  { label: '输出能力', key: 'atk', color: 'stat-red' },
+  { label: '机动性', key: 'spd', color: 'stat-blue' },
+  { label: '上手难度', key: 'diff', color: 'stat-purple' }
+]
+
+const getStatValue = (key) => {
+  return Math.floor(Math.random() * 60) + 40
+}
 
 onMounted(async () => {
   try {
     const res = await getAllWithSkills()
     characters.value = res.data
+    if (res.data.length > 0) {
+      activeChar.value = res.data[0]
+    }
   } catch (e) {
     console.error(e)
   }
@@ -73,187 +96,257 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.character-page {
-  padding-top: 70px;
-  max-width: 1200px;
+.skills {
+  padding: 3rem 1rem;
+  max-width: 72rem;
   margin: 0 auto;
-  background: #1a1a2e;
 }
 
-.page-header {
+.skills-header {
   text-align: center;
-  padding: 80px 40px 60px;
+  margin-bottom: 3rem;
 }
 
-.header-icon {
-  margin-bottom: 20px;
+.skills-header h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
 }
 
-.page-header h1 {
-  font-size: 48px;
-  color: #ffffff;
-  margin-bottom: 16px;
+.skills-header p {
+  font-size: 1.25rem;
+  color: var(--color-muted-foreground);
 }
 
-.page-header p {
-  font-size: 20px;
-  color: #a0a0a0;
-}
-
-.characters-grid {
+.skills-layout {
   display: grid;
-  gap: 30px;
-  padding: 40px;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
-.character-card {
-  background: #16213e;
-  border: 2px solid #0f3460;
-  border-radius: 16px;
-  padding: 30px;
-  transition: all 0.3s ease;
+@media (min-width: 1024px) {
+  .skills-layout {
+    grid-template-columns: 12rem 1fr;
+  }
 }
 
-.character-card:hover {
-  border-color: #ff6b35;
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(255, 107, 53, 0.3);
+.characters-list {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
 }
 
-.character-header {
+@media (min-width: 1024px) {
+  .characters-list {
+    flex-direction: column;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+}
+
+.char-btn {
   display: flex;
   align-items: center;
-  gap: 30px;
-  padding-bottom: 30px;
-  border-bottom: 2px solid #0f3460;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 200px;
+  text-align: left;
 }
 
-.avatar-wrapper {
-  position: relative;
+@media (min-width: 1024px) {
+  .char-btn {
+    min-width: 0;
+  }
 }
 
-.avatar-placeholder {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 3px solid #00d4ff;
-  overflow: hidden;
+.char-btn:hover {
+  border-color: rgba(255, 85, 0, 0.5);
 }
 
-.character-info {
-  flex: 1;
+.char-btn.active {
+  background: rgba(255, 85, 0, 0.1);
+  border-color: var(--color-primary);
 }
 
-.character-info h2 {
-  font-size: 28px;
-  color: #ffffff;
-  margin-bottom: 12px;
+.char-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 }
 
-.intro {
-  color: #a0a0a0;
-  font-size: 16px;
-  margin-bottom: 16px;
+.char-name {
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.char-title {
+  font-size: 0.75rem;
+  color: var(--color-muted-foreground);
+}
+
+.char-detail {
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .char-detail {
+    padding: 2rem;
+  }
+}
+
+.detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .detail-header {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.detail-avatar {
+  width: 8rem;
+  height: 8rem;
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  border: 4px solid var(--color-primary);
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .detail-avatar {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+.detail-name {
+  font-size: 1.875rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+.detail-intro {
+  color: var(--color-muted-foreground);
+  margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
-.pros-cons {
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 28rem;
+}
+
+.stat-header {
   display: flex;
-  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
 }
 
-.pro-tag {
-  background: rgba(0, 212, 255, 0.2);
-  color: #00d4ff;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #00d4ff;
-  font-size: 14px;
-  font-weight: bold;
+.stat-label {
+  color: var(--color-muted-foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.con-tag {
-  background: rgba(255, 107, 53, 0.2);
-  color: #ff6b35;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #ff6b35;
-  font-size: 14px;
-  font-weight: bold;
+.stat-value {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: monospace;
 }
 
-.skills-section {
-  margin-top: 30px;
+.stat-bar {
+  height: 0.75rem;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  overflow: hidden;
 }
 
-.skills-section h3 {
-  font-size: 20px;
-  color: #ffffff;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.stat-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
 }
 
-.skills-section h3::before {
-  content: '';
-  width: 24px;
-  height: 2px;
-  background: #00d4ff;
+.stat-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.stat-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.stat-blue { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+.stat-purple { background: linear-gradient(90deg, #a855f7, #9333ea); }
+
+.skills-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
 
-.skill-item {
-  background: #1a1a2e;
-  border: 2px solid #0f3460;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.skill-item:hover {
-  border-color: #00d4ff;
-  transform: translateY(-3px);
-}
-
-.skill-icon-placeholder {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
-}
-
-.skill-item h4 {
-  font-size: 16px;
-  color: #ffffff;
-  margin-bottom: 8px;
-}
-
-.skill-item p {
-  font-size: 14px;
-  color: #a0a0a0;
-  line-height: 1.5;
-}
-
-@media (max-width: 1024px) {
+@media (min-width: 768px) {
   .skills-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 768px) {
-  .character-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.skill-card {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  transition: border-color 0.2s ease;
+}
+
+.skill-card:hover {
+  border-color: rgba(255, 85, 0, 0.5);
+}
+
+.skill-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.skill-icon svg {
+  padding: 0.5rem;
+  background: rgba(255, 85, 0, 0.1);
+  border-radius: var(--radius-lg);
+  color: var(--color-primary);
+}
+
+.skill-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.skill-desc {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-muted-foreground);
 }
 </style>

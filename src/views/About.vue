@@ -1,192 +1,277 @@
 <template>
-  <div class="about-page">
-    <div class="page-header">
-      <div class="header-icon">
-        <svg width="60" height="60" viewBox="0 0 60 60">
-          <circle cx="30" cy="30" r="26" fill="#0f3460"/>
-          <circle cx="30" cy="24" r="10" fill="#00d4ff"/>
-          <path d="M20 35 Q30 42 40 35" fill="#ff6b35"/>
-        </svg>
-      </div>
+  <div class="about container">
+    <header class="about-header">
       <h1>关于作者</h1>
-    </div>
+      <p>独立开发者，热爱游戏与代码</p>
+    </header>
 
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="card-header">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" fill="#16213e"/>
-            <circle cx="12" cy="10" r="4" fill="#00d4ff"/>
-            <path d="M6 16 Q12 20 18 16" fill="none" stroke="#ff6b35" stroke-width="2"/>
-          </svg>
-          <h2>个人简介</h2>
-        </div>
-        <p>网络工程专业，全栈开发爱好者，独立开发 Unity 2D 对战游戏，专注前后端分离与云服务部署。</p>
-      </div>
-
-      <div class="about-card">
-        <div class="card-header">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <polygon points="12,2 15,8 21,8 17,12 18,18 12,15 6,18 7,12 3,8 9,8" fill="#ff6b35"/>
-          </svg>
-          <h2>技术栈</h2>
-        </div>
-        <div class="tech-grid">
-          <span class="tech-tag" v-for="tech in techs" :key="tech">{{ tech }}</span>
-        </div>
-      </div>
-
-      <div class="about-card">
-        <div class="card-header">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" fill="#16213e"/>
-            <path d="M8 8 L16 12 L8 16 Z" fill="#00d4ff"/>
-          </svg>
-          <h2>社交链接</h2>
-        </div>
-        <div class="links">
-          <a href="https://github.com" target="_blank" class="link-item github">
-            <svg width="32" height="32" viewBox="0 0 32 32">
-              <path d="M16 4C9.4 4 4 9.4 4 16c0 5.6 3.7 10.4 8.8 12.1.6.1.8-.3.8-.6v-2.1c-3.6.8-4.3-1.7-4.3-1.7-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 1.9 2.9 1.4 3.6 1.1.1-.8.4-1.4.8-1.7-2.8-.3-5.8-1.4-5.8-6.2 0-1.4.5-2.5 1.3-3.4-.1-.4-.6-1.7.1-3.5 0 0 1.1-.3 3.5 1.3 1-.3 2.1-.4 3.2-.4s2.2.1 3.2.4c2.4-1.7 3.5-1.3 3.5-1.3.7 1.8.2 3.1.1 3.5.8.9 1.3 2 1.3 3.4 0 4.8-3 5.9-5.8 6.2.5.4.9 1.2.9 2.4v3.5c0 .3.2.7.8.6C24.3 26.4 28 21.6 28 16c0-6.6-5.4-12-12-12z" fill="#ffffff"/>
+    <div class="about-layout">
+      <div class="profile-card">
+        <div class="profile-avatar"></div>
+        <h2 class="profile-name">Alex Dev</h2>
+        <p class="profile-title">全栈开发 / 独立游戏制作人</p>
+        <p class="profile-desc">
+          网络工程专业，全栈开发爱好者，专注前后端分离与云服务部署。
+        </p>
+        <div class="profile-links">
+          <a href="https://github.com" target="_blank" class="icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
             </svg>
-            <span>GitHub</span>
+          </a>
+          <a href="#" class="icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+          <a href="#" class="icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
           </a>
         </div>
       </div>
 
-      <div class="about-card">
-        <div class="card-header">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <rect x="4" y="4" width="16" height="16" fill="#16213e" rx="2"/>
-            <path d="M8 12 L16 12 M12 8 L12 16" stroke="#00d4ff" stroke-width="2"/>
-          </svg>
-          <h2>项目说明</h2>
-        </div>
-        <p>本项目为个人独立开发，旨在展示全栈开发能力和游戏开发成果。</p>
-        <p>后续将继续更新游戏内容，添加新角色、新技能、新玩法。</p>
+      <div class="details-column">
+        <section class="detail-card">
+          <h3>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+            技术栈展示
+          </h3>
+          <div class="tech-groups">
+            <div class="tech-group">
+              <h4>游戏端 (Client)</h4>
+              <div class="tech-tags">
+                <span class="tech-tag tag-primary" v-for="tech in clientTechs" :key="tech">{{ tech }}</span>
+              </div>
+            </div>
+            <div class="tech-group">
+              <h4>官网前端 (Frontend)</h4>
+              <div class="tech-tags">
+                <span class="tech-tag tag-accent" v-for="tech in frontendTechs" :key="tech">{{ tech }}</span>
+              </div>
+            </div>
+            <div class="tech-group">
+              <h4>服务端 (Backend)</h4>
+              <div class="tech-tags">
+                <span class="tech-tag tag-green" v-for="tech in backendTechs" :key="tech">{{ tech }}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="detail-card">
+          <h3>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+              <line x1="6" y1="6" x2="6.01" y2="6"/>
+              <line x1="6" y1="18" x2="6.01" y2="18"/>
+            </svg>
+            项目说明
+          </h3>
+          <div class="project-desc">
+            <p><strong>开发初衷：</strong> VerseBrawl 是我作为独立开发者尝试的第一个完整的联机对战游戏项目。旨在通过实践掌握 Unity 联机开发以及全栈 Web 技术的整合。</p>
+            <p><strong>官网目的：</strong> 本网站主要用于展示游戏特色、提供下载入口，并作为玩家查看排行榜和最新公告的枢纽。同时，后台管理系统方便我对游戏数据进行简单的维护。</p>
+            <p><strong>后续计划：</strong></p>
+            <ul>
+              <li>完善更多角色和技能设计。</li>
+              <li>增加好友系统和组队匹配功能。</li>
+              <li>优化 WebGL 端的性能表现。</li>
+            </ul>
+          </div>
+        </section>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const techs = ['Unity', 'SpringBoot', 'Vue3', 'MySQL', 'MyBatis-Plus', 'Docker', 'Nginx', 'GitHub Actions']
+const clientTechs = ['Unity 2022', 'C#', 'Photon PUN 2', 'DOTween']
+const frontendTechs = ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vite', 'Pinia']
+const backendTechs = ['Spring Boot', 'MySQL', 'Redis', 'Docker', 'Nginx']
 </script>
 
 <style scoped>
-.about-page {
-  padding-top: 70px;
-  max-width: 800px;
+.about {
+  padding: 3rem 1rem;
+  max-width: 64rem;
   margin: 0 auto;
-  background: #1a1a2e;
 }
 
-.page-header {
+.about-header {
   text-align: center;
-  padding: 80px 40px 60px;
+  margin-bottom: 3rem;
 }
 
-.header-icon {
-  margin-bottom: 20px;
+.about-header h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
 }
 
-.page-header h1 {
-  font-size: 48px;
-  color: #ffffff;
-  margin-bottom: 16px;
+.about-header p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-muted-foreground);
 }
 
-.about-grid {
+.about-layout {
   display: grid;
-  gap: 30px;
-  padding: 40px;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
-.about-card {
-  background: #16213e;
-  border: 2px solid #0f3460;
-  border-radius: 12px;
-  padding: 30px;
-  transition: all 0.3s ease;
+@media (min-width: 768px) {
+  .about-layout {
+    grid-template-columns: 16rem 1fr;
+  }
 }
 
-.about-card:hover {
-  border-color: #00d4ff;
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+.profile-card {
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-3xl);
+  padding: 1.5rem;
+  text-align: center;
 }
 
-.card-header {
+@media (min-width: 768px) {
+  .profile-card {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.profile-avatar {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  border: 4px solid var(--color-primary);
+  margin: 0 auto 1rem;
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 0.25rem;
+}
+
+.profile-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.profile-desc {
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground);
+  margin-bottom: 1.5rem;
+}
+
+.profile-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.details-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-card {
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-3xl);
+  padding: 2rem;
+}
+
+.detail-card h3 {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
 }
 
-.card-header h2 {
-  font-size: 24px;
-  color: #ffffff;
-  margin: 0;
-}
-
-.about-card p {
-  color: #a0a0a0;
-  line-height: 1.8;
-  font-size: 16px;
-  margin-bottom: 12px;
-}
-
-.tech-grid {
+.tech-groups {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tech-group h4 {
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-muted-foreground);
+  margin-bottom: 0.75rem;
+}
+
+.tech-tags {
+  display: flex;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .tech-tag {
-  padding: 8px 16px;
-  background: rgba(0, 212, 255, 0.2);
-  color: #00d4ff;
-  border: 1px solid #00d4ff;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: var(--radius-lg);
+  border: 1px solid;
 }
 
-.tech-tag:hover {
-  background: rgba(255, 107, 53, 0.2);
-  color: #ff6b35;
-  border-color: #ff6b35;
+.tag-primary {
+  background: rgba(255, 85, 0, 0.1);
+  color: var(--color-primary);
+  border-color: rgba(255, 85, 0, 0.2);
 }
 
-.links {
-  display: flex;
-  gap: 16px;
+.tag-accent {
+  background: rgba(255, 170, 0, 0.1);
+  color: var(--color-accent);
+  border-color: rgba(255, 170, 0, 0.2);
 }
 
-.link-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 24px;
-  background: rgba(0, 212, 255, 0.2);
-  color: #00d4ff;
-  border: 2px solid #00d4ff;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.3s ease;
+.tag-green {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.2);
 }
 
-.link-item:hover {
-  background: rgba(255, 107, 53, 0.2);
-  color: #ff6b35;
-  border-color: #ff6b35;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+.project-desc {
+  color: var(--color-muted-foreground);
+  line-height: 1.7;
+  font-weight: 500;
 }
 
-.link-item span {
-  font-size: 16px;
-  font-weight: bold;
+.project-desc p {
+  margin-bottom: 1rem;
+}
+
+.project-desc ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.project-desc li {
+  margin-bottom: 0.5rem;
 }
 </style>

@@ -1,17 +1,20 @@
 <template>
-  <div class="notice-detail-page">
-    <el-card class="detail-card" v-if="notice">
-      <div class="notice-header">
-        <el-tag v-if="notice.isTop" type="danger">置顶</el-tag>
-        <el-tag :type="getTagType(notice.category)">{{ notice.category }}</el-tag>
-        <span class="notice-time">{{ formatTime(notice.createTime) }}</span>
+  <div class="notice-detail">
+    <div class="detail-content" v-if="notice">
+      <div class="notice-meta">
+        <span v-if="notice.isTop" class="top-badge">置顶</span>
+        <span class="category-badge" :class="getCategoryClass(notice.category)">{{ notice.category }}</span>
+        <span class="notice-date">{{ formatTime(notice.createTime) }}</span>
       </div>
+      
       <h1>{{ notice.title }}</h1>
-      <div class="notice-content">
+      
+      <div class="notice-body">
         <pre>{{ notice.content }}</pre>
       </div>
-      <el-button @click="$router.back()">返回列表</el-button>
-    </el-card>
+      
+      <button class="back-btn" @click="$router.back()">返回列表</button>
+    </div>
   </div>
 </template>
 
@@ -28,12 +31,11 @@ const formatTime = (time) => {
   return new Date(time).toLocaleDateString('zh-CN')
 }
 
-const getTagType = (cat) => {
-  switch (cat) {
-    case '版本更新': return 'success'
-    case '维护公告': return 'warning'
-    case '活动通知': return 'primary'
-    default: return 'info'
+const getCategoryClass = (cat) => {
+  return {
+    'cat-update': cat === '版本更新',
+    'cat-event': cat === '活动通知',
+    'cat-maintenance': cat === '维护公告'
   }
 }
 
@@ -48,44 +50,99 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.notice-detail-page {
-  padding: 20px;
+.notice-detail {
+  padding-top: 64px;
   max-width: 800px;
   margin: 0 auto;
+  padding-bottom: 40px;
 }
 
-.detail-card {
-  padding: 20px;
+.detail-content {
+  background: #1c2732;
+  padding: 48px;
+  border-radius: 12px;
+  margin: 20px;
 }
 
-.notice-header {
+.notice-meta {
   display: flex;
-  gap: 8px;
   align-items: center;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-.notice-time {
-  color: #999;
+.top-badge {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255, 122, 69, 0.15);
+  color: #ff7a45;
+}
+
+.category-badge {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(92, 158, 173, 0.15);
+  color: #5c9ead;
+}
+
+.category-badge.cat-update {
+  background: rgba(255, 122, 69, 0.15);
+  color: #ff7a45;
+}
+
+.category-badge.cat-event {
+  background: rgba(255, 215, 0, 0.15);
+  color: #ffd700;
+}
+
+.category-badge.cat-maintenance {
+  background: rgba(136, 153, 166, 0.15);
+  color: #8899a6;
+}
+
+.notice-date {
+  font-size: 14px;
+  color: #8899a6;
   margin-left: auto;
 }
 
-.detail-card h1 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 24px;
+.detail-content h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 32px;
 }
 
-.notice-content {
-  padding: 20px;
-  background: #f5f7fa;
+.notice-body {
+  padding: 32px;
+  background: #0f1419;
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.notice-content pre {
-  white-space: pre-wrap;
+.notice-body pre {
+  color: #8899a6;
   line-height: 1.8;
-  color: #666;
+  white-space: pre-wrap;
+  font-size: 16px;
+}
+
+.back-btn {
+  padding: 12px 24px;
+  background: transparent;
+  color: #5c9ead;
+  border: 1px solid #5c9ead;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(92, 158, 173, 0.1);
 }
 </style>
